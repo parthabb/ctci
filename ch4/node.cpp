@@ -22,8 +22,6 @@ std::vector <Node *> Node :: GetChildren() {
 Node :: ~Node() {
     std::cout << "Calling Node Destructor" << std::endl;
     for (int i = m_children.size() - 1; i >= 0; i--) {
-        Node * n = m_children[i];
         m_children.erase(m_children.begin() + i);
-        delete n;
     }
 }

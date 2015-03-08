@@ -7,7 +7,26 @@ BinaryTree :: BinaryTree() : root(0) {};
 
 BinaryTree :: ~BinaryTree() {
     std::cout << "Calling BinaryTree destructor" << std::endl;
-    delete root;
+    std::stack<BinaryTreeNode *> s;
+    BinaryTreeNode * curr = root;
+    do {
+        while (curr != 0) {
+            if (curr->GetRightChild() != 0) s.push(curr->GetRightChild());
+            s.push(curr);
+            curr = curr->GetLeftChild();
+        }
+        curr = s.top();
+        s.pop();
+        if (curr->GetRightChild() != 0 && s.top() == curr->GetRightChild()) {
+            s.pop();
+            s.push(curr);
+            curr = curr->GetRightChild();
+        } else {
+            BinaryTreeNode * temp = curr;
+            curr = 0;
+            delete temp;
+        }
+    } while (!s.empty());
 }
 
 void BinaryTree :: AddNode(int val) {
